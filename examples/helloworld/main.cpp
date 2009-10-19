@@ -1,13 +1,13 @@
-#include <ctemplate.h>
+#include <QCTemplate.h>
 #include <QDebug>
+
+const char * template_string = "The message is: {{MESSAGE}}";
 
 int main()
 {
-    CTemplate tpl;
+    QCTemplate tpl;
     
     tpl[ "MESSAGE" ] = "Hello World";
-
-	QString s = "{{MESSAGE}}";
-    
-    qDebug() << tpl.expandString( s );
+   
+    qDebug() << tpl.expandString( template_string );
 }
