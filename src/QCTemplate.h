@@ -35,8 +35,12 @@
 #include <QPair>
 #include <memory>
 
-#ifndef CTEMPLATE_DLL_DECL
-# define CTEMPLATE_DLL_DECL  __declspec(dllexport)
+#if defined( BUILD_QCTEMPLATE_DLL )
+# define QCTEMPLATE_DLL_DECL __declspec(dllexport)
+#elif defined( USE_QCTEMPLATE_DLL )
+# define QCTEMPLATE_DLL_DECL __declspec(dllexport)
+#else
+# define QCTEMPLATE_DLL_DECL
 #endif
 
 namespace ctemplate
@@ -44,7 +48,7 @@ namespace ctemplate
 	class TemplateDictionary;
 }
 
-class CTEMPLATE_DLL_DECL QCTemplate
+class QCTEMPLATE_DLL_DECL QCTemplate
 {
 public:
 	QCTemplate();

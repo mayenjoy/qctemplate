@@ -1,4 +1,4 @@
-TARGET	   = ctemplate
+TARGET	   = qctemplate
 TEMPLATE  = lib
 CONFIG += staticlib
 
@@ -27,7 +27,8 @@ win32:staticlib {
 
 linux-g++ {
     QMAKE_CXXFLAGS_WARN_ON += -Wno-unused-parameter -Wno-sign-compare -Wno-type-limits -fdiagnostics-show-option    
-    
+
+    INCLUDEPATH += $$CTEMPLATE_SRC/linux-g++
     INCLUDEPATH += $$CTEMPLATE_SRC
     
     CTEMPLATE_HEADERS_DIR = $$CTEMPLATE_SRC/ctemplate
