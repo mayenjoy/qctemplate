@@ -1,5 +1,6 @@
 TARGET	   = ctemplate
 TEMPLATE  = lib
+CONFIG += staticlib
 
 CTEMPLATE_SRC = ctemplate-0.95/src
 
@@ -7,8 +8,9 @@ win32 {
     # disable "unreferenced formal parameter" warning
     QMAKE_CXXFLAGS_WARN_ON -= -w34100
 
-    INCLUDEPATH += $$CTEMPLATE_SRC/windows
-    
+    INCLUDEPATH += $$CTEMPLATE_SRC/windows    
+    INCLUDEPATH += $$CTEMPLATE_SRC
+        
     CTEMPLATE_HEADERS_DIR = $$CTEMPLATE_SRC/windows/ctemplate
     
     HEADERS += \
@@ -24,10 +26,10 @@ win32:staticlib {
 }
 
 linux-g++ {
-    QMAKE_CXXFLAGS_WARN_ON += -Wno-unused-parameter -Wno-sign-compare -Wno-type-limits -fdiagnostics-show-option
+    QMAKE_CXXFLAGS_WARN_ON += -Wno-unused-parameter -Wno-sign-compare -Wno-type-limits -fdiagnostics-show-option    
     
     INCLUDEPATH += $$CTEMPLATE_SRC
-
+    
     CTEMPLATE_HEADERS_DIR = $$CTEMPLATE_SRC/ctemplate
     
     HEADERS += $$CTEMPLATE_SRC/linux-g++/config.h 
