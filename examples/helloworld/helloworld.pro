@@ -6,7 +6,7 @@ INCLUDEPATH += ../../src/
 DEPENDPATH += ../../src/
 
 win32 {
-    LIBS += ctemplate.lib
+    LIBS += qctemplate.lib
     
     CONFIG(debug, debug|release) {
         QMAKE_LIBDIR += ../../src/debug
