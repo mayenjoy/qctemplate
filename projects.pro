@@ -3,4 +3,5 @@ CONFIG += ordered
 
 SUBDIRS    = \
     src/qctemplate.pro \
-    examples/helloworld
+    examples/helloworld \
+    examples/forloop
