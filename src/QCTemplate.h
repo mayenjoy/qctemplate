@@ -54,12 +54,14 @@ public:
 	QCTemplate();
 	~QCTemplate();
 
-    QString & operator[]( const QString & VariableName );
+  QString & operator[]( const QString & VariableName );
 	const QString operator[]( const QString & VariableName ) const;
 
 	void enterSection( const QString & SectionName );
 	void exitSection();
 
+  void clear();
+  
 	QString expandString( const QString & TemplateString );
 
 	// Template file must be UTF-8 encoded

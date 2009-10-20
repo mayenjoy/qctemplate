@@ -89,6 +89,13 @@ void QCTemplate::exitSection()
 	}
 }
 
+void QCTemplate::clear()
+{
+    this->zSections.clear();
+    this->zMainValues.clear();
+    this->zMainDict.reset( new ctemplate::TemplateDictionary("") );
+}
+
 QString QCTemplate::expandString( const QString & TemplateString )
 {
 	while ( !this->zSections.isEmpty() )
