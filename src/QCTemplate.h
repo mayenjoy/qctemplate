@@ -45,39 +45,39 @@
 
 namespace ctemplate
 {
-	class TemplateDictionary;
+    class TemplateDictionary;
 }
 
 class QCTEMPLATE_DLL_DECL QCTemplate
 {
 public:
-	QCTemplate();
-	~QCTemplate();
+    QCTemplate();
+    ~QCTemplate();
 
-  QString & operator[]( const QString & VariableName );
-	const QString operator[]( const QString & VariableName ) const;
+    QString & operator[]( const QString & VariableName );
+    const QString operator[]( const QString & VariableName ) const;
 
-	void enterSection( const QString & SectionName );
-	void exitSection();
+    void enterSection( const QString & SectionName );
+    void exitSection();
 
-  void clear();
+    void clear();
   
-	QString expandString( const QString & TemplateString );
+    QString expandString( const QString & TemplateString );
 
-	// Template file must be UTF-8 encoded
-	QString expandFile( const QString & TemplateFilePath );
-
-private:
-	// noncopiable
-	QCTemplate( const QCTemplate & );
-	QCTemplate & operator=( const QCTemplate & );
+    /// Template file must be UTF-8 encoded
+    QString expandFile( const QString & TemplateFilePath );
 
 private:
-	typedef QMap<QString, QString> QStringMap;
-	typedef QPair<ctemplate::TemplateDictionary*, QStringMap> Section;
-	QStack<Section> zSections;
-	std::auto_ptr<ctemplate::TemplateDictionary> zMainDict;
-	QStringMap zMainValues;
+    // noncopiable
+    QCTemplate( const QCTemplate & );
+    QCTemplate & operator=( const QCTemplate & );
+
+private:
+    typedef QMap<QString, QString> QStringMap;
+    typedef QPair<ctemplate::TemplateDictionary*, QStringMap> Section;
+    QStack<Section> zSections;
+    std::auto_ptr<ctemplate::TemplateDictionary> zMainDict;
+    QStringMap zMainValues;
 };
 
 #endif
