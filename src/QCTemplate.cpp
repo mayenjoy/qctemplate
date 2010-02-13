@@ -32,6 +32,28 @@
 #include <QDebug>
 #include <ctemplate/template.h>
 
+namespace // anonymous
+{
+    inline std::string toStdString( const QString & Str )
+    {
+#ifdef QT_NO_STL
+        const QByteArray asc = Str.toAscii();
+        return std::string(asc.constData(), asc.length());
+#else
+        return Str.toStdString();
+#endif
+    }
+
+    inline QString toQString( const std::string & Str )
+    {
+#ifdef QT_NO_STL
+        return QString::fromAscii(Str.data(), static_cast<int>(Str.size()));
+#else
+        return QString::fromStdString( Str );
+#endif
+    }
+}
+
 QCTemplate::QCTemplate()
 {
 	this->zMainDict.reset( new ctemplate::TemplateDictionary("") );
@@ -71,7 +93,7 @@ const QString QCTemplate::operator[]( const QString & VariableName ) const
 void QCTemplate::enterSection( const QString & SectionName )
 {
 	ctemplate::TemplateDictionary *dict =
-		this->zMainDict->AddSectionDictionary( SectionName.toStdString() );
+		this->zMainDict->AddSectionDictionary( toStdString( SectionName ) );
 
 	this->zSections.push(
 		Section( dict, QStringMap() ) );
@@ -85,7 +107,7 @@ void QCTemplate::exitSection()
 
 	for ( QStringMap::const_iterator i = values.begin(); i != values.end(); i++ )
 	{
-		dict->SetValue( i.key().toStdString(), i.value().toStdString() );
+		dict->SetValue( toStdString( i.key() ), toStdString( i.value() ) );
 	}
 }
 
@@ -106,12 +128,12 @@ QString QCTemplate::expandString( const QString & TemplateString )
 	// TODO: test data alteration after an expand
 	for ( QStringMap::const_iterator i = this->zMainValues.begin(); i != this->zMainValues.end(); i++ )
 	{
-		this->zMainDict->SetValue( i.key().toStdString(), i.value().toStdString() );
+		this->zMainDict->SetValue( toStdString( i.key() ), toStdString( i.value() ) );
 	}
 	this->zMainValues.clear();
 	
 	ctemplate::Template* tpl = ctemplate::Template::StringToTemplate(
-		TemplateString.toStdString(), ctemplate::DO_NOT_STRIP);
+		toStdString( TemplateString ), ctemplate::DO_NOT_STRIP);
     if ( !tpl )
     {
         qWarning() << "Failed to parse template string";
@@ -121,7 +143,7 @@ QString QCTemplate::expandString( const QString & TemplateString )
     std::string result;
     tpl->Expand( &result, this->zMainDict.get() );
 
-	return QString::fromStdString( result );
+	return toQString( result );
 }
 
 QString QCTemplate::expandFile( const QString & TemplateFilePath )
